@@ -2,7 +2,11 @@ package me.tim.plugin.checks;
 
 import me.tim.plugin.Quantinum;
 import me.tim.plugin.checks.impl.movement.FlyCheck;
+import me.tim.plugin.checks.impl.player.NoFallCheck;
+import me.tim.plugin.checks.result.CheckResult;
+import me.tim.plugin.checks.result.Logger;
 import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -17,7 +21,8 @@ public class CheckManager {
     }
 
     private void addChecks() {
-        this.checks.add(new FlyCheck());
+        //this.checks.add(new FlyCheck());
+        this.checks.add(new NoFallCheck());
     }
 
     public Check getCheckByName(String name) {
@@ -35,14 +40,13 @@ public class CheckManager {
         this.checks.forEach(check -> {
             if (check == null) return;
 
-            if (check.runCheck(e, Quantinum.acPlayer.get(e.getPlayer().getUniqueId())).failed()) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        e.getPlayer().setFlySpeed(0);
-                        e.getPlayer().setWalkSpeed(0);
-                    }
-                }.runTaskLaterAsynchronously(Quantinum.getInstance(), 3000);
+            CheckResult cr = check.runCheck(e, Quantinum.acPlayer.get(e.getPlayer().getUniqueId()));
+            if (cr.failed()) {
+                if (e instanceof PlayerMoveEvent) {
+                    PlayerMoveEvent em = (PlayerMoveEvent) e;
+                    em.setTo(em.getFrom());
+                }
+                Logger.logCheck(cr, e.getPlayer());
             }
         });
     }
