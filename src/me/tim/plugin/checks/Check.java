@@ -2,6 +2,7 @@ package me.tim.plugin.checks;
 
 import me.tim.plugin.checks.result.CheckResult;
 import me.tim.plugin.util.player.QuantPlayer;
+import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.player.PlayerEvent;
 
 public class Check {
@@ -12,6 +13,9 @@ public class Check {
     }
 
     public CheckResult runCheck(PlayerEvent e, QuantPlayer qp) {
+        return null;
+    }
+    public CheckResult runCheck(EntityEvent e, QuantPlayer qp) {
         return null;
     }
 

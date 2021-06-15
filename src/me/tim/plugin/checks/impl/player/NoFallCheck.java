@@ -5,6 +5,7 @@ import me.tim.plugin.checks.Check;
 import me.tim.plugin.checks.result.CheckResult;
 import me.tim.plugin.checks.result.Level;
 import me.tim.plugin.util.player.QuantPlayer;
+import org.bukkit.Location;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,6 +22,7 @@ public class NoFallCheck extends Check {
         if (e instanceof PlayerMoveEvent) {
             PlayerMoveEvent em = (PlayerMoveEvent) e;
 
+            boolean shouldCheck = qp.isAir(qp.getPlayer().getLocation().add(0, -3, 0));
             boolean onGround = qp.proveNearGround(em.getTo());
 
             boolean lastGrounded = this.lastGround;
@@ -29,15 +31,11 @@ public class NoFallCheck extends Check {
             boolean prevLastGround = this.preLastGround;
             this.preLastGround = lastGrounded;
 
-            if (!onGround && !lastGrounded && !prevLastGround) {
-                if (em.getPlayer().isOnGround()) {
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            em.getPlayer().damage(2);
-                        }
-                    }.runTaskTimerAsynchronously(Quantinum.getInstance(), 0, 700);
-                    return new CheckResult(Level.DEFINITLY, "PLAYER_NOFALL, using nofall hacks!");
+            if (shouldCheck) {
+                if (!onGround && !lastGrounded && !prevLastGround) {
+                    if (em.getPlayer().isOnGround()) {
+                        return new CheckResult(Level.DEFINITLY, "PLAYER_NOFALL, using nofall hacks!");
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package me.tim.plugin;
 
+import me.tim.plugin.checks.CheckManager;
 import me.tim.plugin.listener.HandleJoinLeave;
 import me.tim.plugin.listener.HandlePlayer;
 import me.tim.plugin.util.player.QuantPlayer;

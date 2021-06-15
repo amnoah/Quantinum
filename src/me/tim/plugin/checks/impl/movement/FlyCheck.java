@@ -6,6 +6,7 @@ import me.tim.plugin.checks.result.Level;
 import me.tim.plugin.util.math.Calculation;
 import me.tim.plugin.util.player.QuantPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
