@@ -7,9 +7,11 @@ import org.bukkit.event.player.PlayerEvent;
 
 public class Check {
     private String name;
+    private int vl;
 
-    public Check(String name) {
+    public Check(String name, int vl) {
         this.name = name;
+        this.vl = vl;
     }
 
     public CheckResult runCheck(PlayerEvent e, QuantPlayer qp) {
@@ -21,5 +23,13 @@ public class Check {
 
     public String getName() {
         return name;
+    }
+
+    public int getVl() {
+        return vl;
+    }
+
+    public void setVl(int vl) {
+        this.vl = vl;
     }
 }

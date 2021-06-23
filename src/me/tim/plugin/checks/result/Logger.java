@@ -1,13 +1,10 @@
 package me.tim.plugin.checks.result;
 
-import me.tim.plugin.util.player.QuantPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
-
-import static org.bukkit.ChatColor.*;
 
 public class Logger {
 

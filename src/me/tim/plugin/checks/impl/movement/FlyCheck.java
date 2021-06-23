@@ -15,12 +15,15 @@ public class FlyCheck extends Check {
     private double lastYDist;
 
     public FlyCheck() {
-        super("FlyCheck");
+        super("FlyCheck", 1);
     }
 
     @Override
     public CheckResult runCheck(PlayerEvent e, QuantPlayer qp) {
+        int vl = this.getVl();
         if (e instanceof PlayerMoveEvent) {
+            if (this.getVl() > 4) e.getPlayer().kickPlayer("Using Fly Hacks");
+
             PlayerMoveEvent em = (PlayerMoveEvent) e;
             if (qp.getPlayer().getAllowFlight()) return null;
 
@@ -39,10 +42,13 @@ public class FlyCheck extends Check {
             if (!onGround && !lastGrounded && !prevLastGround) {
                 if (Math.abs(predDist) >= 0.005D) {
                     if (!Calculation.isRoughlyEqual(yDist, predDist, 0.001)) {
+                        vl++;
+                        this.setVl(vl);
                         return new CheckResult(Level.DEFINITLY, "MOVE_FLY, using fly-hacks");
                     }
                 }
             }
+            this.setVl(1);
         }
         return new CheckResult(Level.PASSED, null);
     }
